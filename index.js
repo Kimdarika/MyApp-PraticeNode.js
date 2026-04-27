@@ -1,44 +1,42 @@
 const express = require("express");
 const mysql = require("mysql2");
-
 const app = express();
 app.use(express.json());
 
-// ---------------- MYSQL CONNECTION ----------------
+//MYSQL CONNECTION
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "myapp"
 });
-
-db.connect((err) => {
-  if (err) {
-    console.log("DB error:", err);
+db.connect((error) => {
+  if (error) {
+    console.log("DB error:", error);
   } else {
     console.log("MySQL Connected ✅");
   }
 });
 
-// ---------------- HOME ----------------
+//HOME
 app.get("/", (req, res) => {
-  res.send("MySQL REST API Running");
+  res.send("Welcome to the User API");
 });
 
-// ---------------- GET USERS ----------------
+//GET USERS
 app.get("/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, result) => {
-    if (err) return res.status(500).json(err);
+  db.query("SELECT * FROM users", (error, result) => {
+    if (error) return res.status(500).json(error);
     res.json(result);
   });
 });
 
-// ---------------- CREATE USER ----------------
+//CREATE
 app.post("/users", (req, res) => {
   const { name } = req.body;
 
-  db.query("INSERT INTO users (name) VALUES (?)", [name], (err, result) => {
-    if (err) return res.status(500).json(err);
+  db.query("INSERT INTO users (name) VALUES (?)", [name], (error, result) => {
+    if (error) return res.status(500).json(error);
 
     res.json({
       id: result.insertId,
@@ -47,7 +45,7 @@ app.post("/users", (req, res) => {
   });
 });
 
-// ---------------- UPDATE USER ----------------
+//UPDATE
 app.put("/users/:id", (req, res) => {
   const id = req.params.id;
   const { name } = req.body;
@@ -55,8 +53,8 @@ app.put("/users/:id", (req, res) => {
   db.query(
     "UPDATE users SET name = ? WHERE id = ?",
     [name, id],
-    (err, result) => {
-      if (err) return res.status(500).json(err);
+    (error, result) => {
+      if (error) return res.status(500).json(error);
 
       if (result.affectedRows === 0) {
         return res.status(404).json({ message: "User not found" });
@@ -67,22 +65,21 @@ app.put("/users/:id", (req, res) => {
   );
 });
 
-// ---------------- DELETE USER ----------------
+//DELETE 
 app.delete("/users/:id", (req, res) => {
   const id = req.params.id;
 
-  db.query("DELETE FROM users WHERE id = ?", [id], (err, result) => {
-    if (err) return res.status(500).json(err);
+  db.query("DELETE FROM users WHERE id = ?", [id], (error, result) => {
+    if (error) return res.status(500).json(error);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json({ message: "Deleted successfully" });
   });
 });
 
-// ---------------- START SERVER ----------------
+//START SERVER
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
