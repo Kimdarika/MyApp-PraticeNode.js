@@ -3,16 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "mysql2": "^3.22.3",
-    "dev": "node index.js"
-  }
+    "mysql2": "^3.22.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kimdarika/MyApp-PraticeNode.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kimdarika/MyApp-PraticeNode.js/issues"
+  },
+  "homepage": "https://github.com/Kimdarika/MyApp-PraticeNode.js#readme"
 }
