@@ -5,7 +5,7 @@ const userController = require("../controllers/UserController");
 
 // HOME
 router.get("/", (req, res) => {
-  res.send("API is working ");
+  res.send("The API is working ");
 });
 
 // GET
